@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ростов‑на‑Дону — «Ворота Кавказа»</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+
+  <style>
+  /* ---------- Палитра ---------- */
+  :root{
+    --bg-main:#f5f8fd;
+    --bg-card:#fff;
+    --accent:#4d8dff;
+    --accent-dark:#2d5bbb;
+    --accent-light:#bfd5ff;
+    --text-main:#2d2d2d;
+    --text-muted:#666;
+    --shadow:0 6px 20px rgba(0,0,0,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+
+  /* ---------- База ---------- */
+  body{
+    background:var(--bg-main);
+    color:var(--text-main);
+    font-family:"Montserrat",Arial,sans-serif;
+    line-height:1.65;
+    padding-bottom:4rem;
+    font-size:1rem;
+  }
+
+  /* ---------- Шапка ---------- */
+  header{
+    background:linear-gradient(135deg,var(--accent)0%,var(--accent-dark)100%);
+    color:#fff;text-align:center;
+    padding:4rem 1rem 3.5rem;
+    border-radius:0 0 32px 32px;
+    box-shadow:var(--shadow);
+  }
+  header h1{
+    font-family:"Playfair Display",serif;
+    font-size:clamp(2rem,4vw,3.2rem);
+    margin-bottom:1rem;
+  }
+  header p{
+    max-width:680px;
+    margin:0 auto;
+    font-size:1.1rem;
+    color:rgba(255,255,255,.92);
+  }
+
+  /* ---------- Тайм‑лайн ---------- */
+  .timeline{
+    max-width:1100px;
+    margin:3rem auto 0;
+    padding:0 1.2rem;
+    position:relative;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:160px;               /* 140px (дата) + 20px (половина 40‑точки) */
+    top:0;bottom:0;
+    width:4px;
+    background:linear-gradient(var(--accent),var(--accent-light));
+    border-radius:2px;
+  }
+
+  /* ---------- Факт ---------- */
+  .fact{
+    display:grid;
+    grid-template-columns:140px 40px 1fr;   /* дата | точка | карточка */
+    gap:0 2rem;
+    margin-bottom:3rem;
+    align-items:flex-start;
+  }
+  .date{
+    text-align:right;
+    font-weight:600;
+    color:var(--accent-dark);
+    font-size:.95rem;
+    padding-right:.8rem;
+    padding-top:.5rem;
+    white-space:nowrap;
+  }
+  .dot{position:relative;width:40px;height:100%}
+  .dot::before{
+    content:"";
+    position:absolute;
+    top:8px;left:-72.5%;transform:translateX(-50%);
+    width:18px;height:18px;
+    background:var(--accent);
+    border:4px solid var(--bg-card);
+    border-radius:50%;
+    box-shadow:var(--shadow);
+  }
+  .card{
+    background:var(--bg-card);
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    transition:transform .25s;
+  }
+  .card:hover{transform:translateY(-4px)}
+  .card-inner{padding:1.6rem 1.8rem 1.8rem}
+  .card h2{margin-bottom:.8rem;font-size:1.3rem;color:var(--accent-dark)}
+  .card img{display:block;width:100%;height:auto;border-radius:12px;margin:.6rem 0 1.2rem}
+  .card p{color:var(--text-muted)}
+
+  /* ---------- Источники ---------- */
+  .sources{
+    max-width:900px;
+    margin:4rem auto 0;
+    background:var(--bg-card);
+    border-radius:20px;
+    padding:2rem 2.2rem;
+    box-shadow:var(--shadow);
+  }
+  .sources h2{
+    font-family:"Playfair Display",serif;
+    font-size:1.5rem;
+    color:var(--accent-dark);
+    margin-bottom:1rem;
+  }
+  .sources ol{padding-left:1.2rem}
+  .sources li{margin:.55rem 0;color:var(--text-muted)}
+
+  /* ---------- Мобильная адаптация ---------- */
+  @media (max-width:992px){
+    body{font-size:.95rem;}
+    header{padding:3.5rem 1rem 3rem;}
+    header h1{font-size:clamp(1.8rem,5vw,2.6rem);}
+  }
+
+  @media (max-width:768px){
+    .timeline::before{left:10px;}
+    .fact{
+      grid-template-columns:20px 1fr;       /* точка | карточка */
+      gap:0 1rem;
+      margin-bottom:2.5rem;
+    }
+    .date{
+      grid-column:2;
+      text-align:left;
+      padding:0 0 .4rem;
+      font-size:.9rem;
+    }
+    .dot{
+      width:20px;
+    }
+    .dot::before{
+      top:5px;
+      left:50%;
+      width:12px;
+      height:12px;
+      border:3px solid var(--bg-card);
+    }
+    .card{grid-column:2;}
+  }
+
+  @media (max-width:480px){
+    header{padding:3rem 1rem 2.5rem;}
+    header h1{font-size:1.8rem;}
+    .card-inner{padding:1.4rem 1.6rem 1.6rem;}
+  }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Ростов‑на‑Дону — «Ворота Кавказа»</h1>
+  <p>История становления Ростова‑на‑Дону как ключевого торгового и культурного центра юга России — от античной Танаиса до «Ростов Арены».</p>
+</header>
+
+<section class="timeline">
+
+  <!-- 1 -->
+  <article class="fact">
+    <div class="date">III в. до н.э.</div>
+    <div class="dot"></div>
+    <div class="card"><div class="card-inner">
+      <h2>Древность — перекрёсток цивилизаций</h2>
+      <img src="https://museum-tanais.ru/sites/default/files/fields/node.news.field_image/2024-10/2.jpg" alt="Археологический парк Танаис">
+      <p>До основания Ростова‑на‑Дону место слияния Дона и Азовского моря уже являлось важнейшим торговым центром, где пересекались международные пути. Ещё в III веке до н. э. здесь был основан греческий Танаис, процветавший благодаря выгодному положению между античным миром и степными племенами. В Средние века регион привлекал купцов Европы и Азии; на месте античного поселения возникали генуэзские фактории, а позже — османские крепости и торговые пункты.</p>
+    </div></div>
+  </article>
+
+  <!-- 2 -->
+  <article class="fact">
+    <div class="date">1749–1763</div>
+    <div class="dot"></div>
+    <div class="card"><div class="card-inner">
+      <h2>Темерницкая таможня и крепость</h2>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Portrait_of_Empress_Elizabeth_Petrovna_%281709-1761%29.jpg/800px-Portrait_of_Empress_Elizabeth_Petrovna_%281709-1761%29.jpg" alt="Императрица Елизавета Петровна">
+      <p>15 декабря 1749 года по указу императрицы Елизаветы Петровны на Дону учреждена Темерницкая таможня, упорядочившая торговлю с южными регионами и Черноморьем. Это ускорило рост экономической значимости территории. В 1761–1763 годах построена крепость Святого Димитрия Ростовского, давшая начало поселению Ростов, впоследствии ставшему крупным торговым и административным центром Юга России.</p>
+    </div></div>
+  </article>
+
+  <!-- 3 -->
+  <article class="fact">
+    <div class="date">1779</div>
+    <div class="dot"></div>
+    <div class="card"><div class="card-inner">
+      <h2>Армянская Нахичевань‑на‑Дону</h2>
+      <img src="https://sun9-30.userapi.com/impg/6eoeIpO-iq4EHPxuZTFdMHokAViU5jtMSRg_RQ/sQ-6sMX_l7w.jpg?size=1047x833&quality=95&sign=0aa62f4c6b18a0a5e4e96101bc1ed8c1&type=album" alt="Церковь Сурб‑Хач">
+      <p>По указу Екатерины II в 1779 году рядом с крепостью основана армянская колония Нахичевань‑на‑Дону. Переселенцы развивали торговлю и ремёсла; к 1792‑му возвели храмовый комплекс Сурб‑Хач, открыли типографию и школы, превратив окрестности крепости в культурный центр края.</p>
+    </div></div>
+  </article>
+
+  <!-- 4 -->
+  <article class="fact">
+    <div class="date">1796–1806</div>
+    <div class="dot"></div>
+    <div class="card"><div class="card-inner">
+      <h2>Город Ростов‑на‑Дону</h2>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Plan_of_Rostov-on-Don_1917.jpg" alt="Старый план Ростова">
+      <p>В 1796 г. поселение получило статус города, а с 1806 г. официально именуется <strong>Ростовом‑на‑Дону</strong>, стремительно превращаясь в деловой порт юга империи.</p>
+    </div></div>
+  </article>
+
+  <!-- 5 -->
+  <article class="fact">
+    <div class="date">XIX в.</div>
+    <div class="dot"></div>
+    <div class="card"><div class="card-inner">
+      <h2>Порт «Ворота Кавказа»</h2>
+      <img src="https://avatars.mds.yandex.net/i?id=da2db2a251c17548a245baabaf12ba15_l-5222629-images-thumbs&n=13" alt="Кафедральный собор Рождества Богородицы">
+      <p>Строительство ж/д на Харьков, Воронеж и Владикавказ (1870–1875) превратило Ростов в главные «Ворота Кавказа». Население перевалило за 100 тыс., а кафедральный собор Рождества стал архитектурным символом города.</p>
+    </div></div>
+  </article>
+
+  <!-- 6 -->
+  <article class="fact">
+    <div class="date">1917–1920</div>
+    <div class="dot"></div>
+    <div class="card"><div class="card-inner">
+      <h2>Гражданская война</h2>
+      <img src="https://topwar.ru/uploads/posts/2018-12/1545575782_1konarmija.jpg" alt="Ростов в годы Гражданской войны">
+      <p>В 1918‑1919 гг. Ростов четырежды переходил из рук в руки: его удерживали белые войска генералов Корнилова и Деникина, затем — Красная армия, окончательно занявшая город в 1920 г.</p>
+    </div></div>
+  </article>
+
+  <!-- 7 -->
+  <article class="fact">
+    <div class="date">1928</div>
+    <div class="dot"></div>
+    <div class="card"><div class="card-inner">
+      <h2>Нахичевань присоединена к Ростову</h2>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Ростов_на_Дону_Вокзал_1924_1933_автобус.jpg/800px-Ростов_на_Дону_Вокзал_1924_1933_автобус.jpg" alt="Старый Ростов, 1920‑е">
+      <p>В 1928 г. армянская Нахичевань официально вошла в состав Ростова; город стал третьим по численности в РСФСР и административным центром Северо‑Кавказского края.</p>
+    </div></div>
+  </article>
+
+  <!-- 8 -->
+  <article class="fact">
+    <div class="date">1929</div>
+    <div class="dot"></div>
+    <div class="card"><div class="card-inner">
+      <h2>Пуск «Ростсельмаша»</h2>
+      <img src="https://kg-rostov.ru/upload/iblock/2d6/2d6d466e978766f8d4e1f0f57054fae1.jpg" alt="Завод Ростсельмаш">
+      <p><strong>21 июля 1929 г.</strong> выпущена первая машина на заводе «Ростсельмаш», ставшем мировым лидером по производству комбайнов и символом индустриализации Дона.</p>
+    </div></div>
+  </article>
+
+  <!-- 9 -->
+  <article class="fact">
+    <div class="date">1935</div>
+    <div class="dot"></div>
+    <div class="card"><div class="card-inner">
+      <h2>Театр‑«Трактор»</h2>
+      <img src="https://www.fotoprizer.ru/img/53747_orig.jpg" alt="Драмтеатр им. Горького">
+      <p>Открыт драмтеатр им. М. Горького — шедевр конструктивизма, внешне напоминающий гигант‑трактор и воплощающий индустриальный дух 1930‑х.</p>
+    </div></div>
+  </article>
+
+  <!-- 10 -->
+  <article class="fact">
+    <div class="date">1941–1943</div>
+    <div class="dot"></div>
+    <div class="card"><div class="card-inner">
+      <h2>Великая Отечественная</h2>
+      <img src="https://goldcompass.ru/upload/iblock/0ba/0ba966e497eefca372886265a71067e5.jpg" alt="Разрушенный Ростов, 1943">
+      <p>Город дважды оккупирован, но освобождён 14 февраля 1943 г. Потери огромны: разрушено ≈40 % зданий; свыше 27 тыс. жителей расстреляны в Змиёвской балке.</p>
+    </div></div>
+  </article>
+
+  <!-- 11 -->
+  <article class="fact">
+    <div class="date">1952</div>
+    <div class="dot"></div>
+    <div class="card"><div class="card-inner">
+      <h2>Волго‑Донской канал</h2>
+      <img src="https://avatars.mds.yandex.net/get-altay/1880524/2a0000016fe850546b0cfde097a6b2cddcff/XXXL" alt="Волго‑Донской судоходный канал">
+      <p>Открытие канала связало Дон с Волгой и пятью морями, окончательно закрепив статус Ростова как крупнейшего речного порта Европейской России.</p>
+    </div></div>
+  </article>
+
+  <!-- 12 -->
+  <article class="fact">
+    <div class="date">1987</div>
+    <div class="dot"></div>
+    <div class="card"><div class="card-inner">
+      <h2>Город‑миллионник</h2>
+      <img src="https://rostovmuseum.ru/upload/medialibrary/a57/a57b9f42662c09e3bdde0c682235ae63.jpg" alt="Панорама Ростова, 1980‑е">
+      <p>Население Ростова‑на‑Дону превысило 1 млн человек, выведя город в десятку крупнейших в СССР.</p>
+    </div></div>
+  </article>
+
+  <!-- 13 -->
+  <article class="fact">
+    <div class="date">2000</div>
+    <div class="dot"></div>
+    <div class="card"><div class="card-inner">
+      <h2>Столица ЮФО</h2>
+      <img src="https://avatars.mds.yandex.net/i?id=ed105f2749551f5c93b384dc88a0d02d_l-4826642-images-thumbs&n=13" alt="Администрация ЮФО в Ростове">
+      <p>Президентским указом Ростов назначен центром Южного федерального округа, сосредоточив окружные органы власти и бизнес‑структуры.</p>
+    </div></div>
+  </article>
+
+  <!-- 14 -->
+  <article class="fact">
+    <div class="date">2018</div>
+    <div class="dot"></div>
+    <div class="card"><div class="card-inner">
+      <h2>Чемпионат мира FIFA</h2>
+      <img src="https://cdn.culture.ru/images/5d52e2a0-670b-5968-80c1-79f2931652f5" alt="Стадион «Ростов Арена»">
+      <p>Новый стадион «Ростов Арена» принял матчи ЧМ‑2018, представив миру казачий колорит и современную инфраструктуру города.</p>
+    </div></div>
+  </article>
+
+  <!-- 15 -->
+  <article class="fact">
+    <div class="date">2025</div>
+    <div class="dot"></div>
+    <div class="card"><div class="card-inner">
+      <h2>Современный мегаполис</h2>
+      <img src="https://avatars.mds.yandex.net/get-altay/2816622/2a000001753d92bf27edf957fefbe5d0aea0/XXXL" alt="Современный Ростов‑на‑Дону">
+      <p>Сегодня Ростов‑на‑Дону — динамичный миллионник, индустриальный и культурный центр Юга России и неизменные «Ворота Кавказа».</p>
+    </div></div>
+  </article>
+
+</section>
+
+<section class="sources">
+  <h2>Источники</h2>
+  <ol>
+    <li>Энциклопедия городов России. — М.: БРЭ, 2003. — С. 380.</li>
+    <li>Ростовский областной музей краеведения. Пресс‑релиз выставки «Старый Ростов». 21.12.2019.</li>
+    <li>Егоров Б. Почему Ростов называют «южной столицей». // Russia Beyond. 18.10.2022.</li>
+    <li>Rostov‑on‑Don // Encyclopædia Britannica.</li>
+    <li>History of Rostselmash // АО «Ростсельмаш».</li>
+  </ol>
+</section>
+
+</body>
+</html>
