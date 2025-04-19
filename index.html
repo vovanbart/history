@@ -1,201 +1,175 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ростов‑на‑Дону — «Ворота Кавказа»</title>
+  <title>Ростов‑на‑Дону — «Ворота Кавказа»</title>
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
 
   <style>
-    /* ------------------- Цветовая палитра ------------------- */
-    :root {
-      --bg-main: #f4f7fc;
-      --bg-card: #ffffff;
-      --accent: #3b7bff;
-      --accent-dark: #214ebc;
-      --accent-light: #c8d9ff;
-      --text-main: #222;
-      --text-muted: #666;
-      --shadow: 0 8px 24px rgba(0, 0, 0, .08);
-      --radius-lg: 20px;
-    }
+  /* ---------- Переменные для тем ---------- */
+  :root {
+    --bg-main: #f5f8fd;
+    --bg-card: #fff;
+    --accent: #4d8dff;
+    --accent-dark: #2d5bbb;
+    --accent-light: #bfd5ff;
+    --text-main: #2d2d2d;
+    --text-muted: #666;
+    --shadow: 0 6px 20px rgba(0,0,0,.08);
+  }
+  [data-theme="dark"] {
+    --bg-main: #1e1e1e;
+    --bg-card: #2a2a2a;
+    --accent: #4d8dff;
+    --accent-dark: #6faeff;
+    --accent-light: #3a3a3a;
+    --text-main: #eee;
+    --text-muted: #aaa;
+    --shadow: 0 6px 20px rgba(0,0,0,.5);
+  }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-main: #0d1117;
-        --bg-card: #161b22;
-        --accent: #4d8dff;
-        --accent-dark: #6ca0ff;
-        --accent-light: #2d5bbb;
-        --text-main: #e6edf3;
-        --text-muted: #9eafc0;
-        --shadow: 0 8px 24px rgba(0,0,0,.6);
-      }
-    }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg-main);
+    color: var(--text-main);
+    font-family: "Montserrat", Arial, sans-serif;
+    line-height: 1.65;
+    padding-bottom: 4rem;
+    font-size: 1rem;
+  }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  /* ---------- Шапка ---------- */
+  header {
+    position: relative;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    color: #fff;
+    text-align: center;
+    padding: 4rem 1rem 3.5rem;
+    border-radius: 0 0 32px 32px;
+    box-shadow: var(--shadow);
+  }
+  header h1 {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    margin-bottom: 1rem;
+  }
+  header p {
+    max-width: 680px;
+    margin: 0 auto;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,.92);
+  }
 
-    html {
-      scroll-behavior: smooth;
-    }
+  /* Toggle Button */
+  #theme-toggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #fff;
+  }
 
-    body {
-      font-family: "Montserrat", Arial, sans-serif;
-      background: var(--bg-main);
-      color: var(--text-main);
-      line-height: 1.7;
-      font-size: 1rem;
-      overflow-x: hidden;
-    }
+  /* ---------- Тайм‑лайн ---------- */
+  .timeline {
+    max-width: 1100px;
+    margin: 3rem auto 0;
+    padding: 0 1.2rem;
+    position: relative;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 160px;
+    top: 0; bottom: 0;
+    width: 4px;
+    background: linear-gradient(var(--accent), var(--accent-light));
+    border-radius: 2px;
+  }
 
-    /* ------------------- Шапка ------------------- */
-    header {
-      position: relative;
-      padding: 5rem 1rem 4rem;
-      text-align: center;
-      /* плавный переход градиентом в фон страницы */
-      background:linear-gradient(135deg,var(--accent)0%,var(--accent-dark)100%);
-      color: #fff;
-    }
+  /* ---------- Факт ---------- */
+  .fact {
+    display: grid;
+    grid-template-columns: 140px 40px 1fr;
+    gap: 0 2rem;
+    margin-bottom: 3rem;
+    align-items: flex-start;
+  }
+  .date {
+    text-align: right;
+    font-weight: 600;
+    color: var(--accent-dark);
+    font-size: .95rem;
+    padding-right: .8rem;
+    padding-top: .5rem;
+    white-space: nowrap;
+  }
+  .dot { position: relative; width: 40px; height: 100%; }
+  .dot::before {
+    content: "";
+    position: absolute;
+    top: 8px; left: -72.5%; transform: translateX(-50%);
+    width: 18px; height: 18px;
+    background: var(--accent);
+    border: 4px solid var(--bg-card);
+    border-radius: 50%;
+    box-shadow: var(--shadow);
+  }
+  .card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform .25s;
+  }
+  .card:hover { transform: translateY(-4px); }
+  .card-inner { padding: 1.6rem 1.8rem 1.8rem; }
+  .card h2 { margin-bottom: .8rem; font-size: 1.3rem; color: var(--accent-dark); }
+  .card img { display: block; width: 100%; height: auto; border-radius: 12px; margin: .6rem 0 1.2rem; }
+  .card p { color: var(--text-muted); }
 
-    header h1 {
-      font-family: "Playfair Display", serif;
-      font-size: clamp(2.2rem, 5vw, 3.5rem);
-      margin-bottom: 1rem;
-      letter-spacing: .03em;
-    }
+  /* ---------- Источники ---------- */
+  .sources {
+    max-width: 900px;
+    margin: 4rem auto 0;
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 2rem 2.2rem;
+    box-shadow: var(--shadow);
+  }
+  .sources h2 {
+    font-family: "Playfair Display", serif;
+    font-size: 1.5rem;
+    color: var(--accent-dark);
+    margin-bottom: 1rem;
+  }
+  .sources ol { padding-left: 1.2rem; }
+  .sources li { margin: .55rem 0; color: var(--text-muted); }
 
-    header p {
-      max-width: 760px;
-      margin: 0 auto;
-      font-size: 1.15rem;
-      color: rgba(255, 255, 255, .92);
-    }
-
-    /* ------------------- Тайм‑лайн ------------------- */
-    .timeline {
-      position: relative;
-      margin: 4rem auto;
-      padding: 0 2rem;
-      max-width: 1200px;
-    }
-
-    /* центральная линия */
-    .timeline::before {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 0;
-      transform: translateX(-50%);
-      width: 4px;
-      height: 100%;
-      background: linear-gradient(var(--accent), var(--accent-light));
-      border-radius: 2px;
-    }
-
-    /* ------------------- Факт ------------------- */
-    .fact {
-      position: relative;
-      width: 50%;
-      padding: 0 3rem 3rem;
-      animation: fadeInUp .9s ease forwards;
-      opacity: 0;
-    }
-
-    @keyframes fadeInUp { 0% { transform: translateY(50px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
-
-    .fact:nth-child(odd) { left: 0; text-align: right; }
-    .fact:nth-child(even) { left: 50%; }
-
-    .date {
-      font-weight: 600;
-      color: var(--accent-dark);
-      font-size: .95rem;
-      margin-bottom: .5rem;
-      white-space: nowrap;
-    }
-
-    .dot {
-      position: absolute;
-      top: .4rem;
-      width: 24px;
-      height: 24px;
-      background: var(--accent);
-      border-radius: 50%;
-      border: 6px solid var(--bg-main);
-      box-shadow: var(--shadow);
-    }
-    .dot::before { display: none; }
-    .fact:nth-child(odd) .dot { right: -12px; }
-    .fact:nth-child(even) .dot { left: -12px; }
-
-    .card {
-      background: var(--bg-card);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      transition: transform .25s, box-shadow .25s;
-    }
-    .card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0,0,0,.12); }
-
-    .card-inner { padding: 1.8rem 2rem 2rem; }
-    .card h2 { margin-bottom: .8rem; font-size: 1.35rem; color: var(--accent-dark); line-height: 1.4; }
-    .card img { display: block; width: 100%; height: auto; border-radius: 14px; margin: .8rem 0 1.3rem; }
-    .card p { color: var(--text-muted); }
-
-    .fact:nth-child(odd) .card, .fact:nth-child(odd) .date { margin-left: auto; }
-
-    /* ------------------- Источники ------------------- */
-    .sources {
-      max-width: 1000px;
-      margin: 4rem auto 6rem;
-      background: var(--bg-card);
-      border-radius: var(--radius-lg);
-      padding: 2.5rem 2.7rem;
-      box-shadow: var(--shadow);
-    }
-    .sources h2 { font-family: "Playfair Display", serif; font-size: 1.55rem; color: var(--accent-dark); margin-bottom: 1.1rem; }
-    .sources ol { padding-left: 1.2rem; }
-    .sources li { margin: .55rem 0; color: var(--text-muted); line-height: 1.55; }
-
-    /* ------------------- Мобильная адаптация ------------------- */
-    @media (max-width: 992px) {
-      .fact { width: 100%; left: 0 !important; padding: 0 2rem; text-align: left !important; }
-      .timeline::before { left: 20px; transform: none; }
-      .dot { left: 8px !important; right: auto !important; }
-      .fact .card, .fact .date { margin-left: 0 !important; }
-    }
-    @media (max-width: 600px) {
-      body { font-size: .9rem; }
-      header { padding: 4rem 1rem 3.3rem; }
-      header h1 { font-size: clamp(1.9rem, 6vw, 2.4rem); }
-      .card-inner { padding: 1.5rem 1.6rem 1.7rem; }
-      .card h2 { font-size: 1.2rem; }
-    }
+  /* ---------- Адаптив ---------- */
+  @media (max-width: 992px) { body { font-size: .95rem; } header { padding: 3.5rem 1rem 3rem; } header h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); } }
+  @media (max-width: 768px) { .timeline::before { left: 10px; } .fact { grid-template-columns: 20px 1fr; gap: 0 1rem; margin-bottom: 2.5rem; } .date { grid-column: 2; text-align: left; padding: 0 0 .4rem; font-size: .9rem; } .dot { width: 20px; } .dot::before { top: 5px; left: 50%; width: 12px; height: 12px; border: 3px solid var(--bg-card); } .card { grid-column: 2; } }
+  @media (max-width: 480px) { header { padding: 3rem 1rem 2.5rem; } header h1 { font-size: 1.8rem; } .card-inner { padding: 1.4rem 1.6rem 1.6rem; } }
   </style>
 </head>
 <body>
-
 <header>
-  <h1>Ростов‑на‑Дону — «Ворота Кавказа»</h1>
-  <p>История становления Ростова‑на‑Дону как ключевого торгового и культурного центра юга России — от античной Танаиса до «Ростов Арены».</p>
+  <button id="theme-toggle" aria-label="Переключить тему">🌙</button>
+  <h1>Ростов‑на‑Дону — «Ворота Кавказа»</h1>
+  <p>История становления Ростова‑на‑Дону как ключевого торгового и культурного центра юга России — от античной Танаиса до «Ростов Арены».</p>
 </header>
 
 <section class="timeline">
 
-  <!-- Каждый блок .fact оставлен без изменений в содержимом -->
-
   <!-- 1 -->
   <article class="fact">
     <div class="date">III в. до н.э.</div>
-    <span class="dot"></span>
+    <div class="dot"></div>
     <div class="card"><div class="card-inner">
       <h2>Древность — перекрёсток цивилизаций</h2>
       <img src="https://museum-tanais.ru/sites/default/files/fields/node.news.field_image/2024-10/2.jpg" alt="Археологический парк Танаис">
@@ -206,7 +180,7 @@
   <!-- 2 -->
   <article class="fact">
     <div class="date">1749–1763</div>
-    <span class="dot"></span>
+    <div class="dot"></div>
     <div class="card"><div class="card-inner">
       <h2>Темерницкая таможня и крепость</h2>
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Portrait_of_Empress_Elizabeth_Petrovna_%281709-1761%29.jpg/800px-Portrait_of_Empress_Elizabeth_Petrovna_%281709-1761%29.jpg" alt="Императрица Елизавета Петровна">
@@ -217,7 +191,7 @@
   <!-- 3 -->
   <article class="fact">
     <div class="date">1779</div>
-    <span class="dot"></span>
+    <div class="dot"></div>
     <div class="card"><div class="card-inner">
       <h2>Армянская Нахичевань‑на‑Дону</h2>
       <img src="https://sun9-30.userapi.com/impg/6eoeIpO-iq4EHPxuZTFdMHokAViU5jtMSRg_RQ/sQ-6sMX_l7w.jpg?size=1047x833&quality=95&sign=0aa62f4c6b18a0a5e4e96101bc1ed8c1&type=album" alt="Церковь Сурб‑Хач">
@@ -228,7 +202,7 @@
   <!-- 4 -->
   <article class="fact">
     <div class="date">1796–1806</div>
-    <span class="dot"></span>
+    <div class="dot"></div>
     <div class="card"><div class="card-inner">
       <h2>Город Ростов‑на‑Дону</h2>
       <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Plan_of_Rostov-on-Don_1917.jpg" alt="Старый план Ростова">
@@ -239,7 +213,7 @@
   <!-- 5 -->
   <article class="fact">
     <div class="date">XIX в.</div>
-    <span class="dot"></span>
+    <div class="dot"></div>
     <div class="card"><div class="card-inner">
       <h2>Порт «Ворота Кавказа»</h2>
       <img src="https://avatars.mds.yandex.net/i?id=da2db2a251c17548a245baabaf12ba15_l-5222629-images-thumbs&n=13" alt="Кафедральный собор Рождества Богородицы">
@@ -247,12 +221,10 @@
     </div></div>
   </article>
 
-  <!-- ... (остальной контент временной шкалы оставлен без изменений, для краткости не дублируется здесь, но должен быть сохранён в полном файле) ... -->
-
   <!-- 6 -->
   <article class="fact">
     <div class="date">1917–1920</div>
-    <span class="dot"></span>
+    <div class="dot"></div>
     <div class="card"><div class="card-inner">
       <h2>Гражданская война</h2>
       <img src="https://topwar.ru/uploads/posts/2018-12/1545575782_1konarmija.jpg" alt="Ростов в годы Гражданской войны">
@@ -263,7 +235,7 @@
   <!-- 7 -->
   <article class="fact">
     <div class="date">1928</div>
-    <span class="dot"></span>
+    <div class="dot"></div>
     <div class="card"><div class="card-inner">
       <h2>Нахичевань присоединена к Ростову</h2>
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Ростов_на_Дону_Вокзал_1924_1933_автобус.jpg/800px-Ростов_на_Дону_Вокзал_1924_1933_автобус.jpg" alt="Старый Ростов, 1920‑е">
@@ -274,18 +246,18 @@
   <!-- 8 -->
   <article class="fact">
     <div class="date">1929</div>
-    <span class="dot"></span>
+    <div class="dot"></div>
     <div class="card"><div class="card-inner">
       <h2>Пуск «Ростсельмаша»</h2>
       <img src="https://kg-rostov.ru/upload/iblock/2d6/2d6d466e978766f8d4e1f0f57054fae1.jpg" alt="Завод Ростсельмаш">
-      <p><21 июля 1929 года на только‑что построенном донском заводе «Ростсельмаш» сошла с конвейера первая зерноуборочная машина — громоздкий, но надёжный комбайн, собранный руками рабочих‑новаторов и инженеров‑агротехников, приехавших со всего Союза. Это событие ознаменовало рождение будущего промышленного гиганта, который менее чем за десятилетие превратится в мирового лидера по выпуску комбайнов, сделает Ростов‑на‑Дону витриной советской индустриализации и обеспечит хлебными машинами колхозные поля страны во всех уголках родины.</p>
+      <p>21 июля 1929 года на только‑что построенном донском заводе «Ростсельмаш» сошла с конвейера первая зерноуборочная машина — громоздкий, но надёжный комбайн, собранный руками рабочих‑новаторов и инженеров‑агротехников, приехавших со всего Союза. Это событие ознаменовало рождение будущего промышленного гиганта, который менее чем за десятилетие превратится в мирового лидера по выпуску комбайнов, сделает Ростов‑на‑Дону витриной советской индустриализации и обеспечит хлебными машинами колхозные поля страны во всех уголках родины.</p>
     </div></div>
   </article>
 
   <!-- 9 -->
   <article class="fact">
     <div class="date">1935</div>
-    <span class="dot"></span>
+    <div class="dot"></div>
     <div class="card"><div class="card-inner">
       <h2>Театр‑«Трактор»</h2>
       <img src="https://www.fotoprizer.ru/img/53747_orig.jpg" alt="Драмтеатр им. Горького">
@@ -296,7 +268,7 @@
   <!-- 10 -->
   <article class="fact">
     <div class="date">1941–1943</div>
-    <span class="dot"></span>
+    <div class="dot"></div>
     <div class="card"><div class="card-inner">
       <h2>Великая Отечественная</h2>
       <img src="https://goldcompass.ru/upload/iblock/0ba/0ba966e497eefca372886265a71067e5.jpg" alt="Разрушенный Ростов, 1943">
@@ -307,7 +279,7 @@
   <!-- 11 -->
   <article class="fact">
     <div class="date">1952</div>
-    <span class="dot"></span>
+    <div class="dot"></div>
     <div class="card"><div class="card-inner">
       <h2>Волго‑Донской канал</h2>
       <img src="https://avatars.mds.yandex.net/get-altay/1880524/2a0000016fe850546b0cfde097a6b2cddcff/XXXL" alt="Волго‑Донской судоходный канал">
@@ -318,7 +290,7 @@
   <!-- 12 -->
   <article class="fact">
     <div class="date">1987</div>
-    <span class="dot"></span>
+    <div class="dot"></div>
     <div class="card"><div class="card-inner">
       <h2>Город‑миллионник</h2>
       <img src="https://rostovmuseum.ru/upload/medialibrary/a57/a57b9f42662c09e3bdde0c682235ae63.jpg" alt="Панорама Ростова, 1980‑е">
@@ -329,7 +301,7 @@
   <!-- 13 -->
   <article class="fact">
     <div class="date">2000</div>
-    <span class="dot"></span>
+    <div class="dot"></div>
     <div class="card"><div class="card-inner">
       <h2>Столица ЮФО</h2>
       <img src="https://avatars.mds.yandex.net/i?id=ed105f2749551f5c93b384dc88a0d02d_l-4826642-images-thumbs&n=13" alt="Администрация ЮФО в Ростове">
@@ -340,7 +312,7 @@
   <!-- 14 -->
   <article class="fact">
     <div class="date">2018</div>
-    <span class="dot"></span>
+    <div class="dot"></div>
     <div class="card"><div class="card-inner">
       <h2>Чемпионат мира FIFA</h2>
       <img src="https://cdn.culture.ru/images/5d52e2a0-670b-5968-80c1-79f2931652f5" alt="Стадион «Ростов Арена»">
@@ -351,7 +323,7 @@
   <!-- 15 -->
   <article class="fact">
     <div class="date">2025</div>
-    <span class="dot"></span>
+    <div class="dot"></div>
     <div class="card"><div class="card-inner">
       <h2>Современный мегаполис</h2>
       <img src="https://avatars.mds.yandex.net/get-altay/2816622/2a000001753d92bf27edf957fefbe5d0aea0/XXXL" alt="Современный Ростов‑на‑Дону">
@@ -372,5 +344,23 @@
   </ol>
 </section>
 
+<script>
+(function() {
+  const toggle = document.getElementById('theme-toggle');
+  const root = document.documentElement;
+  const stored = localStorage.getItem('theme');
+  // Всегда по умолчанию светлая, если не задано ранее
+  const initial = stored ? stored : 'light';
+  root.setAttribute('data-theme', initial);
+  toggle.textContent = initial === 'dark' ? '☀️' : '🌙';
+
+  toggle.addEventListener('click', () => {
+    const theme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    toggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+  });
+})();
+</script>
 </body>
 </html>
