@@ -31,6 +31,7 @@
       --tooltip-color: #000;
     }
     *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       padding: 0;
@@ -42,8 +43,7 @@
       position: relative;
       padding-bottom: 4rem;
     }
-    html { scroll-behavior: smooth; }
-    /* Читаемый прогресс бар */
+    /* Reading progress bar */
     #progress {
       position: fixed;
       top: 0;
@@ -193,6 +193,7 @@
     }
     .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
     .card-inner { padding: 1.2rem; }
+    /* Typing effect for headings */
     .heading {
       display: inline-block;
       overflow: hidden;
@@ -204,63 +205,23 @@
       color: var(--accent-dark);
       border-right: .1em solid var(--accent);
     }
-    .heading.visible {
-      animation: type 0.8s steps(30) forwards;
-    }
+    .heading.visible { animation: type 0.8s steps(30) forwards; }
     .heading.typed { border-right: none; }
     @keyframes type { from { width: 0; } to { width: 100%; } }
 
     .card img { width: 100%; height: auto; border-radius: 8px; margin: 0.8rem 0; display: block; }
     .img-wrap { position: relative; cursor: pointer; }
-    .tooltip {
-      position: absolute;
-      bottom: 100%;
-      left: 50%;
-      transform: translateX(-50%) translateY(-8px);
-      background: var(--tooltip-bg);
-      color: var(--tooltip-color);
-      padding: 0.4rem 0.6rem;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      white-space: nowrap;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s;
-      pointer-events: none;
-    }
+    .tooltip { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-8px); background: var(--tooltip-bg); color: var(--tooltip-color); padding: 0.4rem 0.6rem; border-radius: 4px; font-size: 0.75rem; white-space: nowrap; opacity: 0; visibility: hidden; transition: opacity 0.3s; pointer-events: none; }
     .img-wrap:hover .tooltip { opacity: 1; visibility: visible; }
-    #back-to-top {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      padding: 0.6rem 1rem;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-      display: none;
-      z-index: 1000;
-    }
-    @media (min-width: 768px) {
-      #toc { display: block; width: 240px; }
-      .timeline { margin-left: 260px; }
-    }
-    @media (max-width: 1024px) {
-      .timeline::before { left: 100px; }
-      .fact { grid-template-columns: 100px 30px 1fr; gap: 0 1rem; }
-      #toc { width: 200px; }
-    }
-    @media (max-width: 768px) {
-      .timeline::before { left: 0; width: 0; }
-      .fact { grid-template-columns: 1fr; grid-template-rows: auto auto auto; gap: 0.5rem 0; }
-      .date { text-align: left; padding: 0; }
-      .dot { display: none; }
-      .card { margin-left: 10px; }
-      .card-inner { padding: 1rem; }
-      header { padding: 2rem 1rem 1.5rem; }
-    }
+    /* Image modal */
+    #modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; z-index: 2000; }
+    #modal.active { opacity: 1; visibility: visible; }
+    #modal-content { background: var(--bg-card); padding: 1rem; border-radius: 8px; max-width: 90%; max-height: 90%; overflow: auto; text-align: center; position: relative; }
+    #modal-close { position: absolute; top: 0.5rem; right: 0.5rem; background: none; border: none; font-size: 1.5rem; color: var(--accent); cursor: pointer; }
+    #back-to-top { position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--accent); color: #fff; border: none; border-radius: 4px; padding: 0.6rem 1rem; cursor: pointer; box-shadow: var(--shadow); display: none; z-index: 1000; }
+    @media (min-width: 768px) { #toc { display: block; width: 240px; } .timeline { margin-left: 260px; } }
+    @media (max-width: 1024px) { .timeline::before { left: 100px; } .fact { grid-template-columns: 100px 30px 1fr; gap: 0 1rem; } #toc { width: 200px; } }
+    @media (max-width: 768px) { .timeline::before { left: 0; width: 0; } .fact { grid-template-columns: 1fr; grid-template-rows: auto auto auto; gap: 0.5rem 0; } .date { text-align: left; padding: 0; } .dot { display: none; } .card { margin-left: 10px; } .card-inner { padding: 1rem; } header { padding: 2rem 1rem 1.5rem; } }
     .sources { max-width: 900px; margin: 4rem auto 0; background: var(--bg-card); border-radius: 20px; padding: 2rem 2.2rem; box-shadow: var(--shadow); }
     .sources h2 { font-family: "Playfair Display", serif; font-size: 1.5rem; color: var(--accent-dark); margin-bottom: 1rem; }
     .sources ol { padding-left: 1.2rem; }
@@ -272,7 +233,6 @@
   <div id="preloader"><div class="spinner"></div></div>
   <div id="progress"></div>
 
-  <!-- Table of Contents -->
   <nav id="toc">
   <h2>Оглавление</h2>
   <ul>
@@ -298,9 +258,10 @@
   <header>
     <button id="theme-toggle" aria-label="Переключить тему">🌙</button>
     <h1>Ростов‑на‑Дону — «Ворота Кавказа»</h1>
-    <p>История становления Ростова‑на‑Дону как ключевого торгового и культурного центра юга России — от античной Танаиса до «Ростов Арены».</p>
+    <p>История становления Ростова‑на‑Дону как ключевого торгового и культурного центра юга России — от античной Танаис до «Ростов Арены».</p>
   </header>
 
+  <!-- Timeline -->
   <section class="timeline">
     <!-- 1 -->
     <article class="fact" id="fact-1">
@@ -509,40 +470,35 @@
   </ol>
 </section>
 
-  <!-- Back to top button -->
+  <!-- Image modal -->
+  <div id="modal">
+    <div id="modal-content">
+      <button id="modal-close">×</button>
+      <img src="" alt="">
+      <div id="modal-caption"></div>
+    </div>
+  </div>
+
+  <!-- Back to top -->
   <button id="back-to-top" aria-label="Наверх">↑</button>
 
   <!-- Scripts -->
   <script>
   (function(){
-    if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
-  }
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    function hidePre(){ document.getElementById('preloader').style.display = 'none'; window.scrollTo(0, 0); }
+    document.addEventListener('DOMContentLoaded', hidePre);
+    window.addEventListener('load', hidePre);
 
-  // Функция скрытия прелоадера и сброса скролла на верх
-  function hidePre(){
-    document.getElementById('preloader').style.display = 'none';
-    window.scrollTo(0, 0);
-  }
-
-  document.addEventListener('DOMContentLoaded', hidePre);
-  window.addEventListener('load', hidePre);
-    // Hide preloader
-    //function hidePre(){ document.getElementById('preloader').style.display = 'none'; }
-    //document.addEventListener('DOMContentLoaded', hidePre);
-    //window.addEventListener('load', hidePre);
-
-    // Scroll progress
     window.addEventListener('scroll', () => {
       const st = document.documentElement.scrollTop;
       const dh = document.documentElement.scrollHeight - window.innerHeight;
       document.getElementById('progress').style.width = (st/dh*100) + '%';
     });
 
-    // Populate TOC
     const tocList = document.querySelector('#toc ul');
-    const header = document.querySelector('header');
     const toc = document.getElementById('toc');
+    const header = document.querySelector('header');
     function populateTOC(){
       tocList.innerHTML = '';
       document.querySelectorAll('.fact').forEach(f => {
@@ -554,73 +510,53 @@
         tocList.appendChild(li);
       });
     }
-    function positionTOC(){
-      const h = header.getBoundingClientRect().height;
-      toc.style.top = (h + 20) + 'px';
-    }
-    populateTOC(); positionTOC();
-    window.addEventListener('resize', positionTOC);
+    function positionTOC(){ toc.style.top = (header.getBoundingClientRect().height + 20) + 'px'; }
+    populateTOC(); positionTOC(); window.addEventListener('resize', positionTOC);
 
-    // Back to top
     const btnTop = document.getElementById('back-to-top');
-    window.addEventListener('scroll', ()=> {
-      btnTop.style.display = window.scrollY > 300 ? 'block' : 'none';
-    });
+    window.addEventListener('scroll', ()=> { btnTop.style.display = window.scrollY > 300 ? 'block' : 'none'; });
     btnTop.addEventListener('click', ()=> window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    // Reveal and typewriter
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if(entry.isIntersecting){
           entry.target.classList.add('visible');
           if(entry.target.classList.contains('heading')){
-            entry.target.addEventListener('animationend', e => {
-              if(e.animationName === 'type') entry.target.classList.add('typed');
-            }, { once: true });
+            entry.target.addEventListener('animationend', e => { if(e.animationName === 'type') entry.target.classList.add('typed'); }, { once: true });
           }
           obs.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.1 });
     document.querySelectorAll('.fact, .heading').forEach(el => observer.observe(el));
 
-    // Images load
-    document.querySelectorAll('.card img').forEach(img => {
-      if(img.complete) img.classList.add('loaded');
-      else img.addEventListener('load', () => img.classList.add('loaded'));
-    });
+    document.querySelectorAll('.card img').forEach(img => { if(img.complete) img.classList.add('loaded'); else img.addEventListener('load', ()=> img.classList.add('loaded')); });
 
-    // Tooltip & modal
+    // Image modal open on click
     document.querySelectorAll('.img-wrap').forEach(w => {
-      w.addEventListener('touchstart', ()=> w.classList.add('touch-active'));
       w.addEventListener('click', ()=> {
         const img = w.querySelector('img');
         const cap = w.dataset.caption;
-        const m = document.getElementById('modal');
+        const modal = document.getElementById('modal');
         document.querySelector('#modal-content img').src = img.src;
         document.querySelector('#modal-content img').alt = img.alt;
         document.getElementById('modal-caption').textContent = cap;
-        m.classList.add('active');
+        modal.classList.add('active');
       });
     });
-    document.getElementById('modal-close').addEventListener('click', ()=> {
-      document.getElementById('modal').classList.remove('active');
-    });
-    document.getElementById('modal').addEventListener('click', e => {
-      if(e.target.id==='modal') e.currentTarget.classList.remove('active');
-    });
+    document.getElementById('modal-close').addEventListener('click', ()=> document.getElementById('modal').classList.remove('active'));
+    document.getElementById('modal').addEventListener('click', e => { if(e.target.id === 'modal') e.currentTarget.classList.remove('active'); });
 
-    // Theme toggle
     const toggle = document.getElementById('theme-toggle');
     const root = document.documentElement;
     const stored = localStorage.getItem('theme') || 'light';
     root.setAttribute('data-theme', stored);
-    toggle.textContent = stored==='dark'?'☀️':'🌙';
+    toggle.textContent = stored === 'dark' ? '☀️' : '🌙';
     toggle.addEventListener('click', ()=> {
-      const t = root.getAttribute('data-theme')==='dark'?'light':'dark';
+      const t = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', t);
       localStorage.setItem('theme', t);
-      toggle.textContent = t==='dark'?'☀️':'🌙';
+      toggle.textContent = t === 'dark' ? '☀️' : '🌙';
     });
   })();
   </script>
