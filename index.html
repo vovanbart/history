@@ -43,6 +43,16 @@
       padding-bottom: 4rem;
     }
     html { scroll-behavior: smooth; }
+    /* Читаемый прогресс бар */
+    #progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 4px;
+      background: var(--accent);
+      z-index: 1000;
+    }
     header {
       background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
       color: #fff;
@@ -124,11 +134,7 @@
       font-weight: 600;
       font-size: 0.8rem;
     }
-    #toc a {
-      color: var(--text-main);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
+    #toc a { color: var(--text-main); text-decoration: none; transition: color 0.2s; }
     #toc a:hover { color: var(--accent); }
 
     .timeline {
@@ -165,9 +171,7 @@
       font-size: 0.95rem;
       padding-top: 0.3rem;
     }
-    .dot {
-      position: relative;
-    }
+    .dot { position: relative; }
     .dot::before {
       content: '';
       position: absolute;
@@ -187,19 +191,26 @@
       overflow: hidden;
       transition: transform 0.25s, box-shadow 0.25s;
     }
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0,0,0,.12);
-    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
     .card-inner { padding: 1.2rem; }
-    .heading { font-family: "Playfair Display", serif; font-size: 1.25rem; margin-bottom: 0.5rem; }
-    .card img {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin: 0.8rem 0;
-      display: block;
+    .heading {
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 0;
+      font-family: "Playfair Display", serif;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent-dark);
+      border-right: .1em solid var(--accent);
     }
+    .heading.visible {
+      animation: type 0.8s steps(30) forwards;
+    }
+    .heading.typed { border-right: none; }
+    @keyframes type { from { width: 0; } to { width: 100%; } }
+
+    .card img { width: 100%; height: auto; border-radius: 8px; margin: 0.8rem 0; display: block; }
     .img-wrap { position: relative; cursor: pointer; }
     .tooltip {
       position: absolute;
@@ -232,47 +243,28 @@
       display: none;
       z-index: 1000;
     }
-    /* Responsive: show TOC and shift timeline on desktop/tablet */
     @media (min-width: 768px) {
       #toc { display: block; width: 240px; }
       .timeline { margin-left: 260px; }
     }
-    /* Medium screens */
     @media (max-width: 1024px) {
       .timeline::before { left: 100px; }
       .fact { grid-template-columns: 100px 30px 1fr; gap: 0 1rem; }
       #toc { width: 200px; }
     }
-    /* Small screens: hide TOC, single column */
     @media (max-width: 768px) {
       .timeline::before { left: 0; width: 0; }
-      .fact {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto;
-        gap: 0.5rem 0;
-      }
+      .fact { grid-template-columns: 1fr; grid-template-rows: auto auto auto; gap: 0.5rem 0; }
       .date { text-align: left; padding: 0; }
       .dot { display: none; }
       .card { margin-left: 10px; }
       .card-inner { padding: 1rem; }
       header { padding: 2rem 1rem 1.5rem; }
     }
-    .sources {
-    max-width: 900px;
-    margin: 4rem auto 0;
-    background: var(--bg-card);
-    border-radius: 20px;
-    padding: 2rem 2.2rem;
-    box-shadow: var(--shadow);
-  }
-  .sources h2 {
-    font-family: "Playfair Display", serif;
-    font-size: 1.5rem;
-    color: var(--accent-dark);
-    margin-bottom: 1rem;
-  }
-  .sources ol { padding-left: 1.2rem; }
-  .sources li { margin: .55rem 0; color: var(--text-muted); }
+    .sources { max-width: 900px; margin: 4rem auto 0; background: var(--bg-card); border-radius: 20px; padding: 2rem 2.2rem; box-shadow: var(--shadow); }
+    .sources h2 { font-family: "Playfair Display", serif; font-size: 1.5rem; color: var(--accent-dark); margin-bottom: 1rem; }
+    .sources ol { padding-left: 1.2rem; }
+    .sources li { margin: .55rem 0; color: var(--text-muted); }
   </style>
 </head>
 <body>
@@ -519,15 +511,6 @@
 
   <!-- Back to top button -->
   <button id="back-to-top" aria-label="Наверх">↑</button>
-
-  <!-- Image modal -->
-  <div id="modal">
-    <div id="modal-content">
-      <button id="modal-close">×</button>
-      <img src="" alt="">
-      <div id="modal-caption"></div>
-    </div>
-  </div>
 
   <!-- Scripts -->
   <script>
